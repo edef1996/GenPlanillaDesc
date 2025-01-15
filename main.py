@@ -4,6 +4,7 @@ import pandas as pd
 from fpdf.enums import TableSpan
 from fpdf.fonts import FontFace
 from pypdf import PdfWriter, PdfReader
+import os,sys
 
 class PDF(FPDF):
     
@@ -94,6 +95,7 @@ def crear_pdf(planilla: list, data: list) -> PDF:
 
     with pdf.table(TABLE_DATA2, text_align="CENTER", col_widths=(10,27,10,30), num_heading_rows=2, headings_style=headings_style):
         pass
+
     with pdf.table(data,text_align="CENTER",col_widths=(5,30,6,6,6.5,20),headings_style=headings_style):
         pass
     pdf.ln(3)  
@@ -107,6 +109,7 @@ data,pl = dataframes(path)
 
 for datos in pl:
     planilla = datos[0]
+
     # EMPEZAMOS FILTRANDO EL DATAFRAME POR EL NUMERO DE PLANILLA  Y SELECCIONAMOS LAS COL. QUE VAMOS A USAR.
     data_filter = data[data['Planilla']==planilla].iloc[:,[2,3,4]]
 
@@ -125,6 +128,13 @@ for datos in pl:
 
     # EJECUTAMOS, RETORNA ELPDF Y LO GUARDAMOS EN EL OUTPUT PASADO. 
     pdf = crear_pdf(datos,other)
-    pdf.output(f"C:/Users/Merel/Desktop/Python Projects/Proyectos VSC/GeneradorPdf/output/hoja{planilla}.pdf")
+    try:
+        pdf.output(f"C:/Users/Merel/Desktop/Python Projects/Proyectos VSC/GeneradorPdf/output/hoja{planilla}.pdf")
+#TODO: Hacer que cree la carpeta y de la salida nuevamente. En el directorio de donde sea que se ejecute el comando. 
+    except FileNotFoundError:
+        print ("Carpeta de salida no encontrada. Creando usando libreria os.")
+        os.mkdir("output")
+
+
 
 # TODO: Queda pendiente una vez que generamos todos los pdfs en la salida, iterar con todos y mergear en un solo pdf. 
