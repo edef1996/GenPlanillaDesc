@@ -1,9 +1,8 @@
-import io, sys
 from fpdf import FPDF
 import pandas as pd
 from fpdf.enums import TableSpan
 from fpdf.fonts import FontFace
-from pypdf import PdfWriter, PdfReader
+from pypdf import PdfMerger
 import os,sys
 
 class PDF(FPDF):
@@ -57,8 +56,7 @@ TABLE_DATA2 = [
     ["16110","BOTELLA PROPIETARIA 1000 RET X1","",  ""],
     ["14103","BARRIL x 30lts","",""],
     ["14104","BARRIL x 50lts","",""],
-    ["","BARRIL x 15lts","",""]
-]
+    ["","BARRIL x 15lts","",""]]
 
 TABLE_DATA3 = [
     ["CONTROLO ->","GUARDIA SEGURIDAD","SUPERVISOR","CHOFER"],
@@ -107,6 +105,8 @@ def crear_pdf(planilla: list, data: list) -> PDF:
 
 data,pl = dataframes(path)
 
+merger = PdfMerger()
+
 for datos in pl:
     planilla = datos[0]
 
@@ -132,9 +132,9 @@ for datos in pl:
         pdf.output(f"C:/Users/Merel/Desktop/Python Projects/Proyectos VSC/GeneradorPdf/output/hoja{planilla}.pdf")
 #TODO: Hacer que cree la carpeta y de la salida nuevamente. En el directorio de donde sea que se ejecute el comando. 
     except FileNotFoundError:
-        print ("Carpeta de salida no encontrada. Creando usando libreria os.")
+        print ("Carpeta de salida no encontrada. Creando dir usando libreria os.")
         os.mkdir("output")
 
 
-
+print ('@hola')
 # TODO: Queda pendiente una vez que generamos todos los pdfs en la salida, iterar con todos y mergear en un solo pdf. 
