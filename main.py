@@ -2,7 +2,7 @@ from fpdf import FPDF
 import pandas as pd
 from fpdf.enums import TableSpan
 from fpdf.fonts import FontFace
-from pypdf import PdfMerger
+# from pypdf import PdfMerger
 import os,sys
 
 class PDF(FPDF):
@@ -105,7 +105,7 @@ def crear_pdf(planilla: list, data: list) -> PDF:
 
 data,pl = dataframes(path)
 
-merger = PdfMerger()
+# merger = PdfMerger()
 
 for datos in pl:
     planilla = datos[0]
