@@ -135,6 +135,5 @@ for datos in pl:
         print ("Carpeta de salida no encontrada. Creando dir usando libreria os.")
         os.mkdir("output")
 
-
 print ('@hola')
 # TODO: Queda pendiente una vez que generamos todos los pdfs en la salida, iterar con todos y mergear en un solo pdf. 
