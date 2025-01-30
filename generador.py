@@ -10,15 +10,17 @@ listdir = os.listdir()
 path_ejecutable = os.getcwd()
 
 if _dir not in listdir:
-    print ('No en el directorio')
+    print ('No en el directorio. Creando carpeta...')
     os.mkdir(_dir)
     os.mkdir(_subdir)
+    print ("Creada con exito.")
 else:
-    print ("Ya existe, reinicializando la carpeta.")
+    print ("Ya existe, reinicializando la carpeta...")
     try:
         shutil.rmtree(_dir)
         os.mkdir(_dir)
         os.mkdir(_subdir)
+        print ("Proceso exitoso.")
     except Exception as e:
         print (f'Ha ocurrido el sig. error:{e}')
 
@@ -27,7 +29,6 @@ data,pl = dataframes(path)
 contador = 0
 
 for datos in pl:
-    contador +=1
     if contador == 3:
         break
 
@@ -57,11 +58,12 @@ for datos in pl:
     except FileNotFoundError:
         print ("Carpeta de salida no encontrada. Creando dir usando libreria os.")
         os.mkdir("output")
+    contador +=1
 
 
 for x in os.listdir(path_ejecutable):
     print (path_ejecutable + '/'+ x)
     if os.path.isdir(path_ejecutable+'/'+x):
         print ('Es un dir')
-    if os.access(path_ejecutable + '/' + x,mode=2):
+    else:
         print ("No es un dir")
