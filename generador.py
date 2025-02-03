@@ -1,13 +1,16 @@
 # Importamos del archivo main, el objeto declarado, las funciones dataaframes y crear_pdf, y las tablas usadas en el objeto. 
 from main import PDF, dataframes, crear_pdf, TABLE_DATA,TABLE_DATA2,TABLE_DATA3
 import os, shutil
+from pypdf import PdfWriter
 
-path = "C:/Users/Merel/Downloads/MOVVTA_FMERELES (33).csv"
+path = "C:/Users/Merel/Downloads/MOVVTA_ANCANETE (24) (1).csv"
 
 _dir = 'output'
-_subdir = 'output/merge'
+_subdir = 'output\\merge'
 listdir = os.listdir()
-path_ejecutable = os.getcwd()
+path_exe = os.getcwd()
+path_output = path_exe + "\\" + _dir
+path_merge = path_exe + "\\" + _subdir + '\\'
 
 if _dir not in listdir:
     print ('No en el directorio. Creando carpeta...')
@@ -26,11 +29,7 @@ else:
 
 data,pl = dataframes(path)
 
-contador = 0
-
 for datos in pl:
-    if contador == 3:
-        break
 
     planilla = datos[0]
 
@@ -52,18 +51,29 @@ for datos in pl:
 
     # EJECUTAMOS, RETORNA ELPDF Y LO GUARDAMOS EN EL OUTPUT EN LOS DIRECTORIOS CREADOS ANTERIORMENTE. 
     pdf = crear_pdf(datos,other)
-    try:
-        pdf.output(f"{path_ejecutable}/{_dir}/HOJARUTA{planilla}.pdf")
-#TODO: Hacer que cree la carpeta y de la salida nuevamente. En el directorio de donde sea que se ejecute el comando. 
-    except FileNotFoundError:
-        print ("Carpeta de salida no encontrada. Creando dir usando libreria os.")
-        os.mkdir("output")
-    contador +=1
+    pdf.output(f"{path_output}/HOJARUTA{planilla}.pdf")
+
+pl_gen = []
 
 
-for x in os.listdir(path_ejecutable):
-    print (path_ejecutable + '/'+ x)
-    if os.path.isdir(path_ejecutable+'/'+x):
+
+
+for x in os.listdir(path_output):
+    print (path_output + '\\'+ x)
+    if os.path.isdir(path_output+'\\'+x):
         print ('Es un dir')
     else:
+        pl_gen.append(x)
         print ("No es un dir")
+
+print (f"pl_gen is-> {pl_gen}")
+# TODO Ahora sigue iterar sobre el dir pasado reconociendo si es dir o ejecutable e ir agregando las hojas a una lista para mergear todas luego. y guardar todas en una carpeta.
+
+merge = PdfWriter()
+
+for hojas_gen in pl_gen:
+
+    merge.append(f"{path_output}//{hojas_gen}")
+
+merge.write(f"{path_merge}merge.pdf")
+merge.close()
