@@ -3,7 +3,7 @@ from main import PDF, dataframes, crear_pdf, TABLE_DATA,TABLE_DATA2,TABLE_DATA3
 import os, shutil
 from pypdf import PdfWriter
 
-path = "C:/Users/Merel/Downloads/MOVVTA_ANCANETE (24) (1).csv"
+path = "C:/Users/Merel/Downloads/MOVVTA_FMERELES (34).csv"
 
 _dir = 'output'
 _subdir = 'output\\merge'
@@ -43,7 +43,7 @@ for datos in pl:
     data_agrupada[['S.STD CJ','S.STD UN.','OBSERVACIONES']] = ""
 
     # DECLARAMOS LA LISTA DE ENCABEZADOS QUE SE VA A INICIALIZAR CON CARA ITERACION
-    other = [['SKU','DESCRIPCION','Cantidad','S.STD CJ','S.STD UN.','OBSERVACIONES']]
+    other = [['SKU','DESCRIPCION','CANTIDAD','RETORNO','SUBSTD','OBSERVACIONES']]
 
     # ITERAMOS CON EL DATAFRAME SUMANDO TODOS LOS REGISTROS A LA LISTA INICIALIZADA ANTERIORMENTE.
     for registros in data_agrupada.itertuples():
